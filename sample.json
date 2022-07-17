@@ -1,0 +1,8 @@
+{
+  "menu": [
+    { "value": 10, "onclick": "OpenDoc()" },
+    { "value": "Close", "onclick": "CloseDoc()", "cachePagesTrack": "200" },
+    { "value": 10, "onclick": "OpenDoc()" },
+    { "value": "New", "onclick": "CreateNewDoc()", "cachePagesTrack": 200 }
+  ]
+}
