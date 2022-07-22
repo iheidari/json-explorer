@@ -1,3 +1,5 @@
+const flatten = require("lodash").flatten;
+
 const analyze = (input) => {
   const result = {};
 
@@ -62,14 +64,29 @@ const analyze = (input) => {
 };
 
 const getValues = (input, path) => {
+  if (input == null) {
+    return [];
+  }
+  if (Array.isArray(input)) {
+    const allItems = input.reduce((acc, item) => {
+      acc.push(...getValues(item, path));
+      return acc;
+    }, []);
+    return [...new Set(allItems)];
+  }
   if (path.length > 1) {
     const newPath = path.slice(1);
-    if (Array.isArray(input[path[0]])) {
-      return input[path[0]].map((item) => getValues(item, newPath));
-    }
+    // if (Array.isArray(input[path[0]])) {
+    //   const allItems = input[path[0]].reduce((acc, item) => {
+    //     acc.push(...getValues(item, newPath));
+    //     return acc;
+    //   }, []);
+    //   return [...new Set(allItems)];
+    // }
+
     return getValues(input[path[0]], newPath);
   }
-  return input[path[0]];
+  return [input[path[0]]];
 };
 
 module.exports = { analyze, getValues };
